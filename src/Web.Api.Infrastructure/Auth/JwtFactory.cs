@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Web.Api.Core.Dto;
 using Web.Api.Core.Interfaces.Services;
+using Web.Api.Infrastructure.Interfaces;
 
 namespace Web.Api.Infrastructure.Auth
 {
     public class JwtFactory : IJwtFactory
     {
+        private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly JwtIssuerOptions _jwtOptions;
 
-        public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions)
+        public JwtFactory(IJwtTokenHandler jwtTokenHandler, IOptions<JwtIssuerOptions> jwtOptions)
         {
+            _jwtTokenHandler = jwtTokenHandler;
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
         }
@@ -42,7 +45,7 @@ namespace Web.Api.Infrastructure.Auth
                 _jwtOptions.Expiration,
                 _jwtOptions.SigningCredentials);
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var encodedJwt = _jwtTokenHandler.WriteToken(jwt);
             return new Token(identity.Claims.Single(c => c.Type == "id").Value, encodedJwt, (int)_jwtOptions.ValidFor.TotalSeconds);
         }
 
