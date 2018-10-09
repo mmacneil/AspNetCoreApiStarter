@@ -21,7 +21,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User("", "", "", "")));
+                .Returns(Task.FromResult(new User("", "", "", "","")));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
@@ -51,7 +51,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User("", "", "", "")));
+                .Returns(Task.FromResult(new User("", "", "", "","")));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))

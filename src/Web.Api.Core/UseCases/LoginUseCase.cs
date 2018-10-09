@@ -32,7 +32,7 @@ namespace Web.Api.Core.UseCases
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
                         // generate token
-                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id, user.UserName),true));
+                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id.ToString(), user.UserName),true));
                         return true;
                     }
                 }

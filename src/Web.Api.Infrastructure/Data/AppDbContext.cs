@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Web.Api.Infrastructure.Data.Entities;
-using Web.Api.Infrastructure.Data.EntityFramework.Entities;
+using Web.Api.Core.Domain.Entities;
+using Web.Api.Core.Shared;
 
 
-namespace Web.Api.Infrastructure.Data.EntityFramework
+namespace Web.Api.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser>
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public override int SaveChanges()
         {
@@ -41,3 +43,5 @@ namespace Web.Api.Infrastructure.Data.EntityFramework
         }
     }
 }
+
+

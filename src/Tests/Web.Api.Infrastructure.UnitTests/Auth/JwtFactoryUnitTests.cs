@@ -23,7 +23,6 @@ namespace Web.Api.Infrastructure.UnitTests.Auth
                 Issuer = "",
                 Audience = "",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("secret_key")),SecurityAlgorithms.HmacSha256)
-                
             };
 
             var mockJwtTokenHandler = new Mock<IJwtTokenHandler>();
@@ -36,7 +35,7 @@ namespace Web.Api.Infrastructure.UnitTests.Auth
 
             // assert
             Assert.Equal(id,result.Id);
-            Assert.Equal(token,result.AuthToken);
+            Assert.Equal(token,result.AccessToken);
         }
     }
 }

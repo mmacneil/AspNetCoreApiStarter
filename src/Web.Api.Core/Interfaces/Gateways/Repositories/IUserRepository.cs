@@ -6,7 +6,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
 {
     public interface IUserRepository
     {
-        Task<CreateUserResponse> Create(User user, string password);
+        Task<CreateUserResponse> Create(string firstName, string lastName, string email, string userName, string password);
         Task<User> FindByName(string userName);
         Task<bool> CheckPassword(User user, string password);
     }

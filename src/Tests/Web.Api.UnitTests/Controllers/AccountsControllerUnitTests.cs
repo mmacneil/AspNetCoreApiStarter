@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Web.Api.Controllers;
-using Web.Api.Core.Domain.Entities;
 using Web.Api.Core.Dto.GatewayResponses.Repositories;
 using Web.Api.Core.Interfaces.Gateways.Repositories;
 using Web.Api.Core.UseCases;
@@ -20,7 +19,7 @@ namespace Web.Api.UnitTests.Controllers
             // arrange
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository
-                .Setup(repo => repo.Create(It.IsAny<User>(), It.IsAny<string>()))
+                .Setup(repo => repo.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(new CreateUserResponse("",true)));
 
             // fakes

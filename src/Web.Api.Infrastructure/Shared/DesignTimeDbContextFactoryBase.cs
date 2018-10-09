@@ -4,28 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Web.Api.Infrastructure.Data.EntityFramework
+namespace Web.Api.Infrastructure.Shared
 {
-    public abstract class DesignTimeDbContextFactoryBase<TContext> :
-        IDesignTimeDbContextFactory<TContext> where TContext : DbContext
+    public abstract class DesignTimeDbContextFactoryBase<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         public TContext CreateDbContext(string[] args)
         {
-            return Create(
-                Directory.GetCurrentDirectory(),
-                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
         }
-        protected abstract TContext CreateNewInstance(
-            DbContextOptions<TContext> options);
+
+        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
 
         public TContext Create()
         {
-            var environmentName =
-                Environment.GetEnvironmentVariable(
-                    "ASPNETCORE_ENVIRONMENT");
-
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var basePath = AppContext.BaseDirectory;
-
             return Create(basePath, environmentName);
         }
 
@@ -67,3 +60,5 @@ namespace Web.Api.Infrastructure.Data.EntityFramework
         }
     }
 }
+
+

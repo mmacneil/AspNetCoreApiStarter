@@ -16,7 +16,7 @@ namespace Web.Api.Infrastructure.Auth
         private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly JwtIssuerOptions _jwtOptions;
 
-        public JwtFactory(IJwtTokenHandler jwtTokenHandler, IOptions<JwtIssuerOptions> jwtOptions)
+        internal JwtFactory(IJwtTokenHandler jwtTokenHandler, IOptions<JwtIssuerOptions> jwtOptions)
         {
             _jwtTokenHandler = jwtTokenHandler;
             _jwtOptions = jwtOptions.Value;
@@ -44,9 +44,8 @@ namespace Web.Api.Infrastructure.Auth
                 _jwtOptions.NotBefore,
                 _jwtOptions.Expiration,
                 _jwtOptions.SigningCredentials);
-
-            var encodedJwt = _jwtTokenHandler.WriteToken(jwt);
-            return new Token(identity.Claims.Single(c => c.Type == "id").Value, encodedJwt, (int)_jwtOptions.ValidFor.TotalSeconds);
+          
+            return new Token(identity.Claims.Single(c => c.Type == "id").Value, _jwtTokenHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);
         }
 
         private static ClaimsIdentity GenerateClaimsIdentity(string id, string userName)
