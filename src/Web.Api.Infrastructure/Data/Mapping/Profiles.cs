@@ -9,8 +9,8 @@ namespace Web.Api.Infrastructure.Data.Mapping
     {
         public DataProfile()
         {
-            //CreateMap<User, AppUser>().ConstructUsing(u => new AppUser {UserName = u.UserName, Email = u.Email}).ForMember(au=>au.Id,opt=>opt.Ignore());
-            CreateMap<AppUser, User>().ConstructUsing(au => new User("","", au.Email, au.UserName, au.Id, au.PasswordHash));
+            CreateMap<User, AppUser>().ConstructUsing(u => new AppUser {UserName = u.UserName, Email = u.Email}).ForMember(au=>au.Id,opt=>opt.Ignore());
+            CreateMap<AppUser, User>().ConstructUsing(au => new User("","", au.Email, au.UserName, au.Id, au.PasswordHash)).ForMember(u => u.Id, opt => opt.Ignore());
         }
     }
 }

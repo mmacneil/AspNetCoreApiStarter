@@ -6,6 +6,7 @@ using Web.Api.Core.Interfaces;
 using Web.Api.Core.Interfaces.Gateways.Repositories;
 using Web.Api.Core.Interfaces.Services;
 using Web.Api.Core.Interfaces.UseCases;
+ 
 
 namespace Web.Api.Core.UseCases
 {
@@ -24,7 +25,7 @@ namespace Web.Api.Core.UseCases
         {
             if (!string.IsNullOrEmpty(message.UserName) && !string.IsNullOrEmpty(message.Password))
             {
-                // confirm we have a user with the given name
+                // ensure we have a user with the given name
                 var user = await _userRepository.FindByName(message.UserName);
                 if (user != null)
                 {
@@ -32,7 +33,7 @@ namespace Web.Api.Core.UseCases
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
                         // generate token
-                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.Id.ToString(), user.UserName),true));
+                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName),true));
                         return true;
                     }
                 }

@@ -7,9 +7,9 @@ namespace Web.Api.Core.Domain.Entities
     {
         public string FirstName { get; private set; } // EF migrations require at least private setter - won't work on auto-property
         public string LastName { get; private set; }
+        public string UserName { get; private set; }
         public string IdentityId { get; private set; }
         public string Email { get; }
-        public string UserName { get; }
         public string PasswordHash { get; }
 
         internal User() { /* Appease EF */ }

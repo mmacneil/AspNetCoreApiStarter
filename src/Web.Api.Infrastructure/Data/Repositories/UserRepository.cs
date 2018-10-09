@@ -11,28 +11,28 @@ using Web.Api.Infrastructure.Identity;
 
 namespace Web.Api.Infrastructure.Data.Repositories
 {
-    internal sealed class UserRepository : IUserRepository
+    internal sealed class UserRepository : EfRepository<User>, IUserRepository
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly AppDbContext _appDbContext;  
+        
 
-        public UserRepository(UserManager<AppUser> userManager, IMapper mapper, AppDbContext appDbContext)
+        public UserRepository(UserManager<AppUser> userManager, IMapper mapper, AppDbContext appDbContext): base(appDbContext)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _appDbContext = appDbContext;
         }
 
         public async Task<CreateUserResponse> Create(string firstName, string lastName, string email, string userName, string password)
         {
-            var appUser = new AppUser {Email = email, UserName = userName}; //_mapper.Map<AppUser>(user);
+            var appUser = new AppUser {Email = email, UserName = userName};
             var identityResult = await _userManager.CreateAsync(appUser, password);
 
             if (!identityResult.Succeeded) return new CreateUserResponse(appUser.Id, false,identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
-
-            _appDbContext.Users.Add(new User(firstName,lastName,email,userName,appUser.Id));
+          
+            _appDbContext.Users.Add(new User(firstName, lastName, email, userName, appUser.Id));
             await _appDbContext.SaveChangesAsync();
+
             return new CreateUserResponse(appUser.Id, identityResult.Succeeded, identityResult.Succeeded ? null : identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
         }
 
