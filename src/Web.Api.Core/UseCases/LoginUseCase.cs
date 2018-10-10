@@ -14,25 +14,31 @@ namespace Web.Api.Core.UseCases
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtFactory _jwtFactory;
+        private readonly ITokenFactory _tokenFactory;
 
-        public LoginUseCase(IUserRepository userRepository, IJwtFactory jwtFactory)
+        public LoginUseCase(IUserRepository userRepository, IJwtFactory jwtFactory, ITokenFactory tokenFactory)
         {
             _userRepository = userRepository;
             _jwtFactory = jwtFactory;
+            _tokenFactory = tokenFactory;
         }
 
         public async Task<bool> Handle(LoginRequest message, IOutputPort<LoginResponse> outputPort)
         {
             if (!string.IsNullOrEmpty(message.UserName) && !string.IsNullOrEmpty(message.Password))
             {
-                // ensure we have a user with the given name
+                // ensure we have a user with the given user name
                 var user = await _userRepository.FindByName(message.UserName);
                 if (user != null)
                 {
                     // validate password
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
-                        // generate token
+                        // generate refresh token
+                        user.AddRereshToken(_tokenFactory.GenerateToken(),user.Id);
+                        await _userRepository.Update(user);
+
+                        // generate access token
                         outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName),true));
                         return true;
                     }

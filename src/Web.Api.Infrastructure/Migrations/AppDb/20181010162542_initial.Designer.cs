@@ -10,7 +10,7 @@ using Web.Api.Infrastructure.Data;
 namespace Web.Api.Infrastructure.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181009172225_initial")]
+    [Migration("20181010162542_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,10 @@ namespace Web.Api.Infrastructure.Migrations.AppDb
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime>("Expires");
@@ -35,7 +39,11 @@ namespace Web.Api.Infrastructure.Migrations.AppDb
 
                     b.Property<string>("Token");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -56,11 +64,17 @@ namespace Web.Api.Infrastructure.Migrations.AppDb
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<string>("UserName");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Web.Api.Core.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Web.Api.Core.Domain.Entities.User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

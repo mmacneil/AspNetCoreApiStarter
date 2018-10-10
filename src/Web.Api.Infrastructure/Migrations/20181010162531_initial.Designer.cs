@@ -10,7 +10,7 @@ using Web.Api.Infrastructure.Identity;
 namespace Web.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20181009172201_initial")]
+    [Migration("20181010162531_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,8 @@ namespace Web.Api.Infrastructure.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<int>("EntityId");
 
                     b.Property<bool>("LockoutEnabled");
 

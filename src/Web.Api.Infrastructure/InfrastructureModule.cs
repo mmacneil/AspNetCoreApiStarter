@@ -14,6 +14,7 @@ namespace Web.Api.Infrastructure
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<JwtFactory>().As<IJwtFactory>().SingleInstance();
             builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance();
+            builder.RegisterType<TokenFactory>().As<ITokenFactory>().SingleInstance();
         }
     }
 }

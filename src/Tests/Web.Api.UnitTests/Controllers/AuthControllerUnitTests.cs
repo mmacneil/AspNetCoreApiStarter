@@ -22,7 +22,7 @@ namespace Web.Api.UnitTests.Controllers
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User("", "", "", "", "")));
+                .Returns(Task.FromResult(new User("", "", "")));
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(true));
@@ -34,7 +34,7 @@ namespace Web.Api.UnitTests.Controllers
 
             // fakes
             var outputPort = new LoginPresenter();
-            var useCase = new LoginUseCase(mockUserRepository.Object, mockJwtFactory.Object);
+            var useCase = new LoginUseCase(mockUserRepository.Object, mockJwtFactory.Object,null);
 
             var controller = new AuthController(useCase, outputPort);
 

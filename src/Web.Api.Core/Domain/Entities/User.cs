@@ -1,4 +1,6 @@
-﻿using Web.Api.Core.Shared;
+﻿using System;
+using System.Collections.Generic;
+using Web.Api.Core.Shared;
 
 
 namespace Web.Api.Core.Domain.Entities
@@ -7,21 +9,26 @@ namespace Web.Api.Core.Domain.Entities
     {
         public string FirstName { get; private set; } // EF migrations require at least private setter - won't work on auto-property
         public string LastName { get; private set; }
-        public string UserName { get; private set; }
         public string IdentityId { get; private set; }
-        public string Email { get; }
-        public string PasswordHash { get; }
+        public string UserName { get; private set; }
+        public string Email { get; private set; }
+        public string PasswordHash { get; private set; }
 
-        internal User() { /* Appease EF */ }
+        private readonly List<RefreshToken> _refreshTokens = new List<RefreshToken>();
+        public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
-        internal User(string firstName, string lastName, string email, string userName, string identityId, string passwordHash = null)
+        internal User() { /* Required by EF */ }
+
+        internal User(string firstName, string lastName, string identityId)
         {
-            IdentityId = identityId;
             FirstName = firstName;
             LastName = lastName;
-            Email = email;
-            UserName = userName;
-            PasswordHash = passwordHash;
+            IdentityId = identityId;
+        }
+
+        public void AddRereshToken(string token,int userId)
+        {
+            _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(5),userId));
         }
     }
 }

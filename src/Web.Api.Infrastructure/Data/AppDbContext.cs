@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Web.Api.Core.Domain.Entities;
 using Web.Api.Core.Shared;
 
@@ -12,6 +13,28 @@ namespace Web.Api.Infrastructure.Data
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(ConfigureUser);
+            modelBuilder.Entity<RefreshToken>(ConfigureRefreshToken);
+        }
+
+        public void ConfigureUser(EntityTypeBuilder<User> builder)
+        {
+            var navigation = builder.Metadata.FindNavigation(nameof(User.RefreshTokens));
+            //EF access the RefreshTokens collection property through its backing field
+            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            builder.Ignore(b => b.Email);
+            builder.Ignore(b => b.PasswordHash);
+            builder.Ignore(b => b.UserName);
+        }
+
+        public void ConfigureRefreshToken(EntityTypeBuilder<RefreshToken> builder)
+        {
+            builder.Property(b => b.Active).HasDefaultValue(true);
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
