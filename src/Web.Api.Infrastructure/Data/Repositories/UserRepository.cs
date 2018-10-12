@@ -41,15 +41,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         public async Task<User> FindByName(string userName)
         {
             var appUser = await _userManager.FindByNameAsync(userName);
-            if (appUser == null) return null;
-
-            var user1 = await GetSingleBySpec(new UserSpecification(appUser.Id));
-            var user2 = _mapper.Map<AppUser, User>(appUser, user1);
-
-            //return _mapper.Map<User>(await _userManager.FindByNameAsync(userName));
-            //  var appUser = await _userManager.FindByNameAsync(userName);
-            //return _mapper.Map<User>(await _userManager.FindByNameAsync(userName));
-            return user2;
+            return appUser == null ? null : _mapper.Map(appUser, await GetSingleBySpec(new UserSpecification(appUser.Id)));
         }
 
         public async Task<bool> CheckPassword(User user, string password)

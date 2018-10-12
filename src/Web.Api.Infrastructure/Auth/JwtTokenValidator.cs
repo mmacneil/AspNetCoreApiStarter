@@ -5,7 +5,7 @@ using Web.Api.Infrastructure.Interfaces;
 
 namespace Web.Api.Infrastructure.Auth
 {
-    public class JwtTokenValidator
+    internal sealed class JwtTokenValidator
     {
         private readonly IJwtTokenHandler _jwtTokenHandler;
 

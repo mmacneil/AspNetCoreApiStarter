@@ -12,7 +12,7 @@ namespace Web.Api.UnitTests.Presenters
     public class LoginPresenterUnitTests
     {
         [Fact]
-        public void Contains_Ok_Status_Code_When_Use_Case_Succeeds()
+        public void Handle_GivenSuccessfulUseCaseResponse_ContainsOKHttpStatusCode()
         {
             // arrange
             var presenter = new LoginPresenter();
@@ -25,7 +25,7 @@ namespace Web.Api.UnitTests.Presenters
         }
 
         [Fact]
-        public void Contains_Token_When_Use_Case_Succeeds()
+        public void Handle_GivenSuccessfulUseCaseResponse_ContainsToken()
         {
             // arrange
             const string accessToken = "777888AAABBB";
@@ -40,7 +40,7 @@ namespace Web.Api.UnitTests.Presenters
         }
 
         [Fact]
-        public void Contains_Errors_When_Use_Case_Fails()
+        public void Handle_GivenFailedUseCaseResponse_ContainsErrors()
         {
             // arrange
             var presenter = new LoginPresenter();

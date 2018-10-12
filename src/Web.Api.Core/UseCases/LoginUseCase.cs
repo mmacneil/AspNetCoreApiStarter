@@ -35,7 +35,7 @@ namespace Web.Api.Core.UseCases
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
                         // generate refresh token
-                        user.AddRereshToken(_tokenFactory.GenerateToken(),user.Id);
+                        user.AddRereshToken(_tokenFactory.GenerateToken(),user.Id,message.RemoteIpAddress);
                         await _userRepository.Update(user);
 
                         // generate access token

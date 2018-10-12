@@ -13,7 +13,7 @@ namespace Web.Api.Infrastructure.UnitTests.Auth
     public class JwtFactoryUnitTests
     {
         [Fact]
-        public async void GenerateEncodedToken_Returns_Expected_Token_Data()
+        public async void GenerateEncodedToken_GivenValidInputs_ReturnsExpectedTokenData()
         {
             // arrange
             var token = Guid.NewGuid().ToString();

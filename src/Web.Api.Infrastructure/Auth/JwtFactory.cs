@@ -11,7 +11,7 @@ using Web.Api.Infrastructure.Interfaces;
 
 namespace Web.Api.Infrastructure.Auth
 {
-    public class JwtFactory : IJwtFactory
+    internal sealed class JwtFactory : IJwtFactory
     {
         private readonly IJwtTokenHandler _jwtTokenHandler;
         private readonly JwtIssuerOptions _jwtOptions;

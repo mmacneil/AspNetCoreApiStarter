@@ -13,7 +13,7 @@ namespace Web.Api.Core.UnitTests.UseCases
     public class RegisterUserUseCaseUnitTests
     {
         [Fact]
-        public async void Can_Register_User()
+        public async void Handle_GivenValidRegistrationDetails_ShouldReturnTrue()
         {
             // arrange
 

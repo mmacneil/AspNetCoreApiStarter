@@ -1,2 +1,2 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("Web.Api.Infrastructure"), InternalsVisibleTo("Web.Api.Core.UnitTests"), InternalsVisibleTo("Web.Api.UnitTests")]
+[assembly: InternalsVisibleTo("Web.Api.Infrastructure"), InternalsVisibleTo("Web.Api.Core.UnitTests"),InternalsVisibleTo("Web.Api.IntegrationTests")]

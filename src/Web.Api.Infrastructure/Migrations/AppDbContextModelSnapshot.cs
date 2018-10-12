@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Api.Infrastructure.Data;
 
-namespace Web.Api.Infrastructure.Migrations.AppDb
+namespace Web.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -34,6 +34,8 @@ namespace Web.Api.Infrastructure.Migrations.AppDb
                     b.Property<DateTime>("Expires");
 
                     b.Property<DateTime>("Modified");
+
+                    b.Property<string>("RemoteIpAddress");
 
                     b.Property<string>("Token");
 

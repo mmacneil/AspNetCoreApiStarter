@@ -5,7 +5,7 @@ using Web.Api.Core.Interfaces.Services;
 
 namespace Web.Api.Infrastructure.Auth
 {
-    internal class TokenFactory : ITokenFactory
+    internal sealed class TokenFactory : ITokenFactory
     {
         public string GenerateToken(int size=32)
         {

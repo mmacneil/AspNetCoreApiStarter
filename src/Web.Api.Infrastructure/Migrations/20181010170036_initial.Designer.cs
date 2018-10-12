@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Api.Infrastructure.Data;
 
-namespace Web.Api.Infrastructure.Migrations.AppDb
+namespace Web.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181010162542_initial")]
+    [Migration("20181010170036_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,8 @@ namespace Web.Api.Infrastructure.Migrations.AppDb
                     b.Property<DateTime>("Expires");
 
                     b.Property<DateTime>("Modified");
+
+                    b.Property<string>("RemoteIpAddress");
 
                     b.Property<string>("Token");
 

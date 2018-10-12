@@ -6,7 +6,7 @@ using Web.Api.Infrastructure.Interfaces;
 
 namespace Web.Api.Infrastructure.Auth
 {
-    public class JwtTokenHandler : IJwtTokenHandler
+    internal sealed class JwtTokenHandler : IJwtTokenHandler
     {
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
 
