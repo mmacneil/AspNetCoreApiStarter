@@ -3,19 +3,21 @@ using Web.Api.Core.Interfaces;
 
 namespace Web.Api.Core.Dto.UseCaseResponses
 {
-  public class LoginResponse : UseCaseResponseMessage
-  {
-    public Token Token { get; }
-    public IEnumerable<Error> Errors { get; }
-
-    public LoginResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
+    public class LoginResponse : UseCaseResponseMessage
     {
-      Errors = errors;
-    }
+        public AccessToken AccessToken { get; }
+        public string RefreshToken { get; }
+        public IEnumerable<Error> Errors { get; }
 
-    public LoginResponse(Token token, bool success = false, string message = null) : base(success, message)
-    {
-      Token = token;
+        public LoginResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
+        {
+            Errors = errors;
+        }
+
+        public LoginResponse(AccessToken accessToken, string refreshToken, bool success = false, string message = null) : base(success, message)
+        {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+        }
     }
-  }
 }

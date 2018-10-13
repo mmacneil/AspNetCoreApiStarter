@@ -24,7 +24,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             mockUserRepository.Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>())).Returns(Task.FromResult(true));
 
             var mockJwtFactory = new Mock<IJwtFactory>();
-            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new Token("", "", 0)));
+            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new AccessToken("", 0)));
 
             var mockTokenFactory = new Mock<ITokenFactory>();
             mockTokenFactory.Verify(factory => factory.GenerateToken(32), Times.Never);
@@ -51,7 +51,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             mockUserRepository.Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>())).Returns(Task.FromResult(false));
 
             var mockJwtFactory = new Mock<IJwtFactory>();
-            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new Token("", "", 0)));
+            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new AccessToken("", 0)));
 
             var mockTokenFactory = new Mock<ITokenFactory>();
             mockTokenFactory.Verify(factory => factory.GenerateToken(32), Times.Never);
@@ -79,7 +79,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             mockUserRepository.Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>())).Returns(Task.FromResult(true));
 
             var mockJwtFactory = new Mock<IJwtFactory>();
-            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new Token("", "", 0)));
+            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new AccessToken("", 0)));
 
             var mockTokenFactory = new Mock<ITokenFactory>();
             mockTokenFactory.Verify(factory => factory.GenerateToken(32), Times.Never);
@@ -106,7 +106,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             mockUserRepository.Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>())).Returns(Task.FromResult(false));
 
             var mockJwtFactory = new Mock<IJwtFactory>();
-            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new Token("", "", 0)));
+            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new AccessToken("", 0)));
 
             var mockTokenFactory = new Mock<ITokenFactory>();
             mockTokenFactory.Verify(factory => factory.GenerateToken(32), Times.Never);

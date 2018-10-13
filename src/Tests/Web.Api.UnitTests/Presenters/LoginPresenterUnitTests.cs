@@ -12,35 +12,35 @@ namespace Web.Api.UnitTests.Presenters
     public class LoginPresenterUnitTests
     {
         [Fact]
-        public void Handle_GivenSuccessfulUseCaseResponse_ContainsOKHttpStatusCode()
+        public void Handle_GivenSuccessfulUseCaseResponse_SetsOKHttpStatusCode()
         {
             // arrange
             var presenter = new LoginPresenter();
 
             // act
-            presenter.Handle(new LoginResponse(new Token("", "", 0), true));
+            presenter.Handle(new LoginResponse(new AccessToken("", 0),"", true));
 
             // assert
             Assert.Equal((int)HttpStatusCode.OK, presenter.ContentResult.StatusCode);
         }
 
         [Fact]
-        public void Handle_GivenSuccessfulUseCaseResponse_ContainsToken()
+        public void Handle_GivenSuccessfulUseCaseResponse_SetsToken()
         {
             // arrange
-            const string accessToken = "777888AAABBB";
+            const string token = "777888AAABBB";
             var presenter = new LoginPresenter();
 
             // act
-            presenter.Handle(new LoginResponse(new Token("1", accessToken, 0), true));
+            presenter.Handle(new LoginResponse(new AccessToken(token, 0),"", true));
 
             // assert
             dynamic data = JsonConvert.DeserializeObject(presenter.ContentResult.Content);
-            Assert.Equal(accessToken, data.accessToken.Value);
+            Assert.Equal(token, data.accessToken.token.Value);
         }
 
         [Fact]
-        public void Handle_GivenFailedUseCaseResponse_ContainsErrors()
+        public void Handle_GivenFailedUseCaseResponse_SetsErrors()
         {
             // arrange
             var presenter = new LoginPresenter();

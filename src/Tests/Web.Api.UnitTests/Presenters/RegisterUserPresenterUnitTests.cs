@@ -9,7 +9,7 @@ namespace Web.Api.UnitTests.Presenters
     public class RegisterUserPresenterUnitTests
     {
         [Fact]
-        public void Handle_GivenSuccessfulUseCaseResponse_ContainsOKHttpStatusCode()
+        public void Handle_GivenSuccessfulUseCaseResponse_SetsOKHttpStatusCode()
         {
             // arrange
             var presenter = new RegisterUserPresenter();
@@ -22,7 +22,7 @@ namespace Web.Api.UnitTests.Presenters
         }
 
         [Fact]
-        public void Handle_GivenSuccessfulUseCaseResponse_ContainsId()
+        public void Handle_GivenSuccessfulUseCaseResponse_SetsId()
         {
             // arrange
             var presenter = new RegisterUserPresenter();
@@ -37,7 +37,7 @@ namespace Web.Api.UnitTests.Presenters
         }
 
         [Fact]
-        public void Handle_GivenFailedUseCaseResponse_ContainsErrors()
+        public void Handle_GivenFailedUseCaseResponse_SetsErrors()
         {
             // arrange
             var presenter = new RegisterUserPresenter();

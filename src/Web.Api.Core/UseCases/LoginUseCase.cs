@@ -6,7 +6,7 @@ using Web.Api.Core.Interfaces;
 using Web.Api.Core.Interfaces.Gateways.Repositories;
 using Web.Api.Core.Interfaces.Services;
 using Web.Api.Core.Interfaces.UseCases;
- 
+
 
 namespace Web.Api.Core.UseCases
 {
@@ -35,11 +35,12 @@ namespace Web.Api.Core.UseCases
                     if (await _userRepository.CheckPassword(user, message.Password))
                     {
                         // generate refresh token
-                        user.AddRereshToken(_tokenFactory.GenerateToken(),user.Id,message.RemoteIpAddress);
+                        var refreshToken = _tokenFactory.GenerateToken();
+                        user.AddRereshToken(refreshToken, user.Id, message.RemoteIpAddress);
                         await _userRepository.Update(user);
 
                         // generate access token
-                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName),true));
+                        outputPort.Handle(new LoginResponse(await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName), refreshToken, true));
                         return true;
                     }
                 }

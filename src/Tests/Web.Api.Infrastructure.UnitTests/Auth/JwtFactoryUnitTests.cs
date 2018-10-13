@@ -34,8 +34,7 @@ namespace Web.Api.Infrastructure.UnitTests.Auth
             var result = await jwtFactory.GenerateEncodedToken(id, "userName");
 
             // assert
-            Assert.Equal(id,result.Id);
-            Assert.Equal(token,result.AccessToken);
+            Assert.Equal(token,result.Token);
         }
     }
 }

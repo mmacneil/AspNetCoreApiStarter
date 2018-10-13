@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace Web.Api.Infrastructure.Auth
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<Token> GenerateEncodedToken(string id, string userName)
+        public async Task<AccessToken> GenerateEncodedToken(string id, string userName)
         {
             var identity = GenerateClaimsIdentity(id, userName);
 
@@ -45,7 +44,7 @@ namespace Web.Api.Infrastructure.Auth
                 _jwtOptions.Expiration,
                 _jwtOptions.SigningCredentials);
           
-            return new Token(identity.Claims.Single(c => c.Type == "id").Value, _jwtTokenHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);
+            return new AccessToken(_jwtTokenHandler.WriteToken(jwt), (int)_jwtOptions.ValidFor.TotalSeconds);
         }
 
         private static ClaimsIdentity GenerateClaimsIdentity(string id, string userName)
