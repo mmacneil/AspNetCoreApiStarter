@@ -10,7 +10,7 @@ using Web.Api.Infrastructure.Data;
 namespace Web.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181010170036_initial")]
+    [Migration("20181014165611_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,10 +26,6 @@ namespace Web.Api.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(true);
 
                     b.Property<DateTime>("Created");
 
@@ -65,6 +61,8 @@ namespace Web.Api.Infrastructure.Migrations
                     b.Property<string>("LastName");
 
                     b.Property<DateTime>("Modified");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

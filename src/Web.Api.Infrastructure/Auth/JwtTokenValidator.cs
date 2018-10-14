@@ -1,11 +1,12 @@
 ﻿using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Web.Api.Core.Interfaces.Services;
 using Web.Api.Infrastructure.Interfaces;
 
 namespace Web.Api.Infrastructure.Auth
 {
-    internal sealed class JwtTokenValidator
+    internal sealed class JwtTokenValidator : IJwtTokenValidator
     {
         private readonly IJwtTokenHandler _jwtTokenHandler;
 

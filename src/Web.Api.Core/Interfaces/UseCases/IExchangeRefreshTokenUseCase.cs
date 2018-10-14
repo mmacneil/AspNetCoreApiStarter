@@ -3,7 +3,7 @@ using Web.Api.Core.Dto.UseCaseResponses;
 
 namespace Web.Api.Core.Interfaces.UseCases
 {
-    public interface ILoginUseCase : IUseCaseRequestHandler<LoginRequest, LoginResponse>
+    public interface IExchangeRefreshTokenUseCase : IUseCaseRequestHandler<ExchangeRefreshTokenRequest, ExchangeRefreshTokenResponse>
     {
     }
 }

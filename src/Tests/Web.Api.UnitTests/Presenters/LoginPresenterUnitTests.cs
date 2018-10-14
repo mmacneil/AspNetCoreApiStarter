@@ -25,7 +25,7 @@ namespace Web.Api.UnitTests.Presenters
         }
 
         [Fact]
-        public void Handle_GivenSuccessfulUseCaseResponse_SetsToken()
+        public void Handle_GivenSuccessfulUseCaseResponse_SetsAccessToken()
         {
             // arrange
             const string token = "777888AAABBB";

@@ -31,7 +31,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
             if (!identityResult.Succeeded) return new CreateUserResponse(appUser.Id, false,identityResult.Errors.Select(e => new Error(e.Code, e.Description)));
           
-            var user = new User(firstName, lastName, appUser.Id);
+            var user = new User(firstName, lastName, appUser.Id, appUser.UserName);
             _appDbContext.Users.Add(user);
             await _appDbContext.SaveChangesAsync();
 

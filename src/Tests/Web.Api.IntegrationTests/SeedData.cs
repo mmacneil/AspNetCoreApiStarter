@@ -11,14 +11,14 @@ namespace Web.Api.IntegrationTests
         {
             dbContext.Users.Add(new AppUser
             {
-                Id = "c5e2143c-b764-43bf-9b73-b21ca2e63931",
+                Id = "41532945-599e-4910-9599-0e7402017fbe",
                 UserName = "mmacneil",
                 NormalizedUserName = "MMACNEIL",
                 Email = "mark@fullstackmark.com",
                 NormalizedEmail = "MARK@FULLSTACKMARK.COM",
-                PasswordHash = "AQAAAAEAACcQAAAAEBPy+7xDLL61sRc6y6OWbzayNInAwaRROPuoaoUq78ecEB0iHhZGUy2+smMWuuyzYg==",
-                SecurityStamp = "7TQD5YWQO4SR2AWN4LCKHI3U4QRZD6ON",
-                ConcurrencyStamp = "4a6b983d-0019-4624-811d-f8c7ffa7762a"
+                PasswordHash = "AQAAAAEAACcQAAAAEKQBX+Qqr/M3qmEcoM3Y/M/8XtVKZ9RnaiXlamue6MIuhOoYONHS7BUHkmOxpF/X3w==",
+                SecurityStamp = "YIJZLWUFIIDD3IZSFDD7OQWG6D4QIYPB",
+                ConcurrencyStamp = "e432007d-0a54-4332-9212-ca9d7e757275"
             });
             
             dbContext.SaveChanges();
@@ -26,7 +26,9 @@ namespace Web.Api.IntegrationTests
 
         public static void PopulateTestData(AppDbContext dbContext)
         {
-            dbContext.Users.Add(new User("Mark", "Macneil", "c5e2143c-b764-43bf-9b73-b21ca2e63931"));
+            var user = new User("Mark", "Macneil", "41532945-599e-4910-9599-0e7402017fbe", "mmacneil");
+            user.AddRereshToken("rB1afdEe6MWu6TyN8zm58xqt/3KWOLRAah2nHLWcboA=", 1, "127.0.0.1");
+            dbContext.Users.Add(user);
             dbContext.SaveChanges();
         }
     }

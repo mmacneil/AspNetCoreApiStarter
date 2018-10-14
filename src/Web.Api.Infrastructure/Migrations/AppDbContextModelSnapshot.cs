@@ -25,10 +25,6 @@ namespace Web.Api.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(true);
-
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime>("Expires");
@@ -63,6 +59,8 @@ namespace Web.Api.Infrastructure.Migrations
                     b.Property<string>("LastName");
 
                     b.Property<DateTime>("Modified");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

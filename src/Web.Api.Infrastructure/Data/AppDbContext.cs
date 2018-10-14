@@ -18,7 +18,6 @@ namespace Web.Api.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(ConfigureUser);
-            modelBuilder.Entity<RefreshToken>(ConfigureRefreshToken);
         }
 
         public void ConfigureUser(EntityTypeBuilder<User> builder)
@@ -29,12 +28,6 @@ namespace Web.Api.Infrastructure.Data
 
             builder.Ignore(b => b.Email);
             builder.Ignore(b => b.PasswordHash);
-            builder.Ignore(b => b.UserName);
-        }
-
-        public void ConfigureRefreshToken(EntityTypeBuilder<RefreshToken> builder)
-        {
-            builder.Property(b => b.Active).HasDefaultValue(true);
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }

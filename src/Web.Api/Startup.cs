@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -18,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using NLog;
 using Swashbuckle.AspNetCore.Swagger;
 using Web.Api.Core;
 using Web.Api.Extensions;
@@ -26,17 +28,19 @@ using Web.Api.Infrastructure.Auth;
 using Web.Api.Infrastructure.Data;
 using Web.Api.Infrastructure.Helpers;
 using Web.Api.Infrastructure.Identity;
-using Web.Api.Presenters;
+using Web.Api.Models.Settings;
+
 
 namespace Web.Api
 {
     public class Startup
     {
-        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
-        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
         public Startup(IConfiguration configuration)
         {
+            // Don't try and load nlog config during integ tests.
+            var nLogConfigPath = string.Concat(Directory.GetCurrentDirectory(), "/nlog.config");
+            if (File.Exists(nLogConfigPath)) { LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));}
             Configuration = configuration;
         }
 
@@ -49,6 +53,12 @@ namespace Web.Api
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Web.Api.Infrastructure")));
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default"), b => b.MigrationsAssembly("Web.Api.Infrastructure")));
 
+            // Register the ConfigurationBuilder instance of AuthSettings
+            var authSettings = Configuration.GetSection(nameof(AuthSettings));
+            services.Configure<AuthSettings>(authSettings);
+
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings[nameof(AuthSettings.SecretKey)]));
+
             // jwt wire up
             // Get options from app settings
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
@@ -58,7 +68,7 @@ namespace Web.Api
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+                options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -70,7 +80,7 @@ namespace Web.Api
                 ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
+                IssuerSigningKey = signingKey,
 
                 RequireExpirationTime = false,
                 ValidateLifetime = true,
@@ -139,7 +149,6 @@ namespace Web.Api
             builder.RegisterModule(new InfrastructureModule());
 
             // Presenters
-            builder.RegisterType<RegisterUserPresenter>().SingleInstance();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).Where(t => t.Name.EndsWith("Presenter")).SingleInstance();
 
             builder.Populate(services);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Web.Api.Core.Shared;
 
 
@@ -19,16 +20,27 @@ namespace Web.Api.Core.Domain.Entities
 
         internal User() { /* Required by EF */ }
 
-        internal User(string firstName, string lastName, string identityId)
+        internal User(string firstName, string lastName, string identityId,string userName)
         {
             FirstName = firstName;
             LastName = lastName;
             IdentityId = identityId;
+            UserName = userName;
         }
 
-        public void AddRereshToken(string token,int userId,string remoteIpAddress)
+        public bool HasValidRefreshToken(string refreshToken)
         {
-            _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(5),userId, remoteIpAddress));
+            return _refreshTokens.Any(rt => rt.Token == refreshToken && rt.Active);
+        }
+
+        public void AddRereshToken(string token,int userId,string remoteIpAddress,double daysToExpire=5)
+        {
+            _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(daysToExpire),userId, remoteIpAddress));
+        }
+
+        public void RemoveRefreshToken(string refreshToken)
+        {
+            _refreshTokens.Remove(_refreshTokens.First(t => t.Token == refreshToken));
         }
     }
 }

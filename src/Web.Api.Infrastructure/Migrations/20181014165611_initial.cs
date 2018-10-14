@@ -18,7 +18,8 @@ namespace Web.Api.Infrastructure.Migrations
                     Modified = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    IdentityId = table.Column<string>(nullable: true)
+                    IdentityId = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +37,6 @@ namespace Web.Api.Infrastructure.Migrations
                     Token = table.Column<string>(nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    Active = table.Column<bool>(nullable: false, defaultValue: true),
                     RemoteIpAddress = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
