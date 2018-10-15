@@ -6,3 +6,9 @@ An ASP.NET Core (v2.1) Web API project to quickly bootstrap new projects.  Inclu
 - Apply database migrations to create the db.  From a command line within the *Web.Api.Infrastructure* project folder use the dotnet CLI to run : 
 - <code>Web.Api.Infrastructure>**dotnet ef database update --context AppDbContext**</code>
 - <code>Web.Api.Infrastructure>**dotnet ef database update --context AppIdentityDbContext**</code>
+
+# Visual Studio
+Open the solution file <code>AspNetCoreApiStarter.sln</code> and build/run.
+
+# Visual Studio Code
+Open the <code>src</code> folder and <code>F5</code> to build/run.
