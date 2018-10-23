@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Moq;
 using Web.Api.Core.Dto.GatewayResponses.Repositories;
 using Web.Api.Core.Dto.UseCaseRequests;
@@ -13,7 +12,7 @@ namespace Web.Api.Core.UnitTests.UseCases
     public class RegisterUserUseCaseUnitTests
     {
         [Fact]
-        public async void Handle_GivenValidRegistrationDetails_ShouldReturnTrue()
+        public async void Handle_GivenValidRegistrationDetails_ShouldSucceed()
         {
             // arrange
 
@@ -21,7 +20,7 @@ namespace Web.Api.Core.UnitTests.UseCases
             var mockUserRepository = new Mock<IUserRepository>();
             mockUserRepository
               .Setup(repo => repo.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-              .Returns(Task.FromResult(new CreateUserResponse("", true)));
+              .ReturnsAsync(new CreateUserResponse("", true));
 
             // 2. The use case and star of this test
             var useCase = new RegisterUserUseCase(mockUserRepository.Object);

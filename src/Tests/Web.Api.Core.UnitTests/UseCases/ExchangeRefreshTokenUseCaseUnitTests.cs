@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Threading.Tasks;
 using Moq;
 using Web.Api.Core.Domain.Entities;
 using Web.Api.Core.Dto;
@@ -17,7 +16,7 @@ namespace Web.Api.Core.UnitTests.UseCases
     public class ExchangeRefreshTokenUseCaseUnitTests
     {
         [Fact]
-        public async void Handle_GivenInvalidToken_ShouldReturnFalse()
+        public async void Handle_GivenInvalidToken_ShouldFail()
         {
             // arrange
             var mockJwtTokenValidator = new Mock<IJwtTokenValidator>();
@@ -36,7 +35,7 @@ namespace Web.Api.Core.UnitTests.UseCases
         }
 
         [Fact]
-        public async void Handle_GivenValidToken_ShouldReturnTrue()
+        public async void Handle_GivenValidToken_ShouldSucceed()
         {
             // arrange
             var mockJwtTokenValidator = new Mock<IJwtTokenValidator>();
@@ -50,10 +49,10 @@ namespace Web.Api.Core.UnitTests.UseCases
             user.AddRereshToken(refreshToken, 0, "");
 
             var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(repo => repo.GetSingleBySpec(It.IsAny<UserSpecification>())).Returns(Task.FromResult(user));
+            mockUserRepository.Setup(repo => repo.GetSingleBySpec(It.IsAny<UserSpecification>())).ReturnsAsync(user);
 
             var mockJwtFactory = new Mock<IJwtFactory>();
-            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new AccessToken("", 0)));
+            mockJwtFactory.Setup(factory => factory.GenerateEncodedToken(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new AccessToken("", 0));
 
             var mockTokenFactory = new Mock<ITokenFactory>();
             mockTokenFactory.Setup(factory => factory.GenerateToken(32)).Returns("");
