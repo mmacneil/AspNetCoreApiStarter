@@ -35,7 +35,6 @@ namespace Web.Api
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             // Don't try and load nlog config during integ tests.
