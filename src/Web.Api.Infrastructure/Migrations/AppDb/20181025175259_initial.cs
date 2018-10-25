@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Web.Api.Infrastructure.Migrations
+namespace Web.Api.Infrastructure.Migrations.AppDb
 {
     public partial class initial : Migration
     {

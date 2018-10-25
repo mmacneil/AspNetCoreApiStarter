@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Infrastructure {
+namespace Web.Api.Infrastructure {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
