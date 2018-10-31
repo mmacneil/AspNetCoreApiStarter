@@ -12,3 +12,15 @@ Open the solution file <code>AspNetCoreApiStarter.sln</code> and build/run.
 
 # Visual Studio Code
 Open the <code>src</code> folder and <code>F5</code> to build/run.
+
+# Swagger Enabled
+To explore and test the available APIs simply run the project and use the Swagger UI.
+
+The available APIs include:
+- POST `/api/accounts` - Creates a new user.
+- POST `/api/auth/login` - Authenticates a user.
+- POST `/api/auth/refreshtoken` - Refreshes expired access tokens.
+- GET `/api/protected` - Protected controller for testing role-based authorization.
+
+
+ 
