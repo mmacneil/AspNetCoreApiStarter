@@ -33,7 +33,7 @@ namespace Web.Api.Core.Domain.Entities
             return _refreshTokens.Any(rt => rt.Token == refreshToken && rt.Active);
         }
 
-        public void AddRereshToken(string token,int userId,string remoteIpAddress,double daysToExpire=5)
+        public void AddRefreshToken(string token,int userId,string remoteIpAddress,double daysToExpire=5)
         {
             _refreshTokens.Add(new RefreshToken(token, DateTime.UtcNow.AddDays(daysToExpire),userId, remoteIpAddress));
         }
