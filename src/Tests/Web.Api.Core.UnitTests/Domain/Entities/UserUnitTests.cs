@@ -11,7 +11,7 @@ namespace Web.Api.Core.UnitTests.Domain.Entities
             // arrange
             const string refreshToken = "1234";
             var user = new User("","","","");
-            user.AddRereshToken(refreshToken, 1,"127.0.0.1");
+            user.AddRefreshToken(refreshToken, 1,"127.0.0.1");
 
             // act
             var result = user.HasValidRefreshToken(refreshToken);
@@ -25,7 +25,7 @@ namespace Web.Api.Core.UnitTests.Domain.Entities
             // arrange
             const string refreshToken = "1234";
             var user = new User("", "", "", "");
-            user.AddRereshToken(refreshToken, 1, "127.0.0.1", -6); // Provision with token 6 days old
+            user.AddRefreshToken(refreshToken, 1, "127.0.0.1", -6); // Provision with token 6 days old
 
             // act
             var result = user.HasValidRefreshToken(refreshToken);

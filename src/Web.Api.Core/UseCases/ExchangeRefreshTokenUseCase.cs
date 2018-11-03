@@ -42,7 +42,7 @@ namespace Web.Api.Core.UseCases
                     var jwtToken = await _jwtFactory.GenerateEncodedToken(user.IdentityId, user.UserName);
                     var refreshToken = _tokenFactory.GenerateToken();
                     user.RemoveRefreshToken(message.RefreshToken); // delete the token we've exchanged
-                    user.AddRereshToken(refreshToken, user.Id, ""); // add the new one
+                    user.AddRefreshToken(refreshToken, user.Id, ""); // add the new one
                     await _userRepository.Update(user);
                     outputPort.Handle(new ExchangeRefreshTokenResponse(jwtToken, refreshToken, true));
                     return true;

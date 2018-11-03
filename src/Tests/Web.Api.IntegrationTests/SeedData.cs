@@ -27,7 +27,7 @@ namespace Web.Api.IntegrationTests
         public static void PopulateTestData(AppDbContext dbContext)
         {
             var user = new User("Mark", "Macneil", "41532945-599e-4910-9599-0e7402017fbe", "mmacneil");
-            user.AddRereshToken("rB1afdEe6MWu6TyN8zm58xqt/3KWOLRAah2nHLWcboA=", 1, "127.0.0.1");
+            user.AddRefreshToken("rB1afdEe6MWu6TyN8zm58xqt/3KWOLRAah2nHLWcboA=", 1, "127.0.0.1");
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
         }

@@ -36,7 +36,7 @@ namespace Web.Api.Core.UseCases
                     {
                         // generate refresh token
                         var refreshToken = _tokenFactory.GenerateToken();
-                        user.AddRereshToken(refreshToken, user.Id, message.RemoteIpAddress);
+                        user.AddRefreshToken(refreshToken, user.Id, message.RemoteIpAddress);
                         await _userRepository.Update(user);
 
                         // generate access token
