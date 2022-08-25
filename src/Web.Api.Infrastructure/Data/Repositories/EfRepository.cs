@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Web.Api.Core.Interfaces.Gateways.Repositories;
 using Web.Api.Core.Shared;
+using Web.Api.Infrastructure.Identity;
 
 namespace Web.Api.Infrastructure.Data.Repositories
 {
@@ -11,10 +12,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
     public abstract class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly AppDbContext _appDbContext;
+        protected readonly AppIdentityDbContext _appIdentityDbContext;
 
-        protected EfRepository(AppDbContext appDbContext)
+        protected EfRepository(AppDbContext appDbContext, AppIdentityDbContext appIdentityDbContext)
         {
             _appDbContext = appDbContext;
+            _appIdentityDbContext = appIdentityDbContext;
+            _appIdentityDbContext.Database.Migrate();
+            _appDbContext.Database.Migrate();
         }
 
         public virtual async Task<T> GetById(int id)
